@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-## See the bottom of this file for license information
+# See the bottom of this file for license information
 
 
 #  Reddit-To-YouTube combines vreddit posts into one YouTube video.

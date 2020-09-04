@@ -1,27 +1,35 @@
 #!/usr/bin/env python3
-## See the bottom of this file for license information
+# See the bottom of this file for license information
 import requests
 
 
-def get_top_links(subreddit: str, time: str, limit: int, headers: dict) -> list:
-  r = requests.get(f'https://www.reddit.com/r/{subreddit}/top/.json?t={time}&limit={limit}', headers=headers)
-  r.raise_for_status()
+def get_top_links(
+    subreddit: str,
+    time: str,
+    limit: int,
+    headers: dict
+) -> list:
+    r = requests.get(
+        f'https://reddit.com/r/{subreddit}/top/.json?t={time}&limit={limit}',
+        headers=headers
+    )
+    r.raise_for_status()
 
-  # Actual list of posts is nested in response data
-  top_posts = r.json()
-  top_posts = top_posts['data']['children']
+    # Actual list of posts is nested in response data
+    top_posts = r.json()
+    top_posts = top_posts['data']['children']
 
-  vreddit_links = []
+    vreddit_links = []
 
-  for post in top_posts:
-    post = post['data']
+    for post in top_posts:
+        post = post['data']
 
-    if not post['domain'] == 'v.redd.it':
-      continue
+        if not post['domain'] == 'v.redd.it':
+            continue
 
-    vreddit_links.append(post['url'])
+        vreddit_links.append(post['url'])
 
-  return vreddit_links
+    return vreddit_links
 
 
 #  Reddit-To-YouTube combines vreddit posts into one YouTube video.

@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
-## See the bottom of this file for license information
+# See the bottom of this file for license information
 
 from modules import reddit_api
 
 if __name__ == '__main__':
-  headers = {'user-agent': 'reddit-to-youtube/0.0.1'}
-  links = reddit_api.get_top_links('tiktokcringeanarchy', 'week', 100, headers)
+    headers = {'user-agent': 'reddit-to-youtube/0.0.1'}
+    links = reddit_api.get_top_links(
+        'tiktokcringeanarchy',
+        'week',
+        100,
+        headers
+    )
 
-  link_num = 0
-  for link in links:
-    link_num += 1
-    print(link_num, ': ', link)
+    link_num = 0
+    for link in links:
+        link_num += 1
+        print(link_num, ': ', link)
 
 
 #  Reddit-To-YouTube combines vreddit posts into one YouTube video.
