@@ -3,14 +3,7 @@
 import requests
 
 
-def get_top_links() -> list:
-  # TODO: Add configuration options for subreddit, time period, # of posts, etc.
-  #       Maybe have these options passed as args?
-  headers = {'user-agent': 'reddit-to-youtube/0.0.1'}
-  subreddit = 'TikTokCringeAnarchy'
-  time = 'week'
-  limit = 100
-
+def get_top_links(subreddit: str, time: str, limit: int, headers: dict) -> list:
   r = requests.get(f'https://www.reddit.com/r/{subreddit}/top/.json?t={time}&limit={limit}', headers=headers)
   r.raise_for_status()
 
@@ -32,9 +25,10 @@ def get_top_links() -> list:
 
 
 if __name__ == '__main__':
-  links = get_top_links()
-  link_num = 0
+  headers = {'user-agent': 'reddit-to-youtube/0.0.1'}
+  links = get_top_links('tiktokcringeanarchy', 'week', 100, headers)
 
+  link_num = 0
   for link in links:
     link_num += 1
     print(link_num, ': ', link)
