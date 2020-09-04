@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 # See the bottom of this file for license information
 
-from modules import reddit_api
+import os
+from modules import reddit_api, video_utils
 
 if __name__ == '__main__':
+    print('Fetching links from Reddit API...')
     headers = {'user-agent': 'reddit-to-youtube/0.0.1'}
     links = reddit_api.get_top_links(
         'tiktokcringeanarchy',
@@ -12,10 +14,19 @@ if __name__ == '__main__':
         headers
     )
 
-    link_num = 0
-    for link in links:
-        link_num += 1
-        print(link_num, ': ', link)
+    # test_links = links[0:2]
+    test_links = links
+    print('Test links:', test_links)
+    print('Downloading test links with youtube_dl...')
+    ytdl_opts = {
+        'format': 'bestvideo+bestaudio',
+        'quiet': True,
+        'forcefilename': True
+    }
+    video_utils.download_vreddit_videos(test_links, ytdl_opts)
+
+    print('Combining video files')
+    video_utils.concat_videos(os.path.join(os.getcwd(), 'test_video.mp4'))
 
 
 #  Reddit-To-YouTube combines vreddit posts into one YouTube video.

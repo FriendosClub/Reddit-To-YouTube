@@ -1,6 +1,10 @@
 # vs code files
 .vscode/
 
+# video files
+tmp/
+*.mp4
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
