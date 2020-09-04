@@ -24,16 +24,6 @@ def get_top_links(subreddit: str, time: str, limit: int, headers: dict) -> list:
   return vreddit_links
 
 
-if __name__ == '__main__':
-  headers = {'user-agent': 'reddit-to-youtube/0.0.1'}
-  links = get_top_links('tiktokcringeanarchy', 'week', 100, headers)
-
-  link_num = 0
-  for link in links:
-    link_num += 1
-    print(link_num, ': ', link)
-
-
 #  Reddit-To-YouTube combines vreddit posts into one YouTube video.
 #  Copyright (C) 2020  Calvin Barrett, Ralph Drake
 #
