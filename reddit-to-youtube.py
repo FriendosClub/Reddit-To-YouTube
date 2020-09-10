@@ -2,15 +2,18 @@
 # See the bottom of this file for license information
 
 import os
-from modules import reddit_api, video_utils
+from datetime import date
+from modules import reddit_api, video_utils, youtube_upload
 
 if __name__ == '__main__':
     print('Fetching links from Reddit API...')
     headers = {'user-agent': 'reddit-to-youtube/0.0.1'}
+    subreddit = 'tiktokcringeanarchy'
+    time = 'week'
     links = reddit_api.get_top_links(
-        'tiktokcringeanarchy',
-        'week',
-        100,
+        subreddit,
+        time,
+        30,
         headers
     )
 
@@ -26,7 +29,19 @@ if __name__ == '__main__':
     video_utils.download_vreddit_videos(test_links, ytdl_opts)
 
     print('Combining video files')
-    video_utils.concat_videos(os.path.join(os.getcwd(), 'test_video.mp4'))
+    output = os.path.join(os.getcwd(), 'test_video.mp4')
+    video_utils.concat_videos(output)
+
+    todays_date = date.today()
+    youtube_upload.youtube_upload(
+        output, 
+        f"{subreddit} Top Posts of the {time} ({date.today()})",
+        f"This {time}'s top posts from {subreddit}",
+        f"people,blogs",
+        22,
+        'public'
+    )
+
 
 
 #  Reddit-To-YouTube combines vreddit posts into one YouTube video.

@@ -9,6 +9,8 @@ import youtube_dl
 def download_vreddit_videos(links: list, ytdl_opts: dict, download_dir='tmp'):
     # youtube-dl doesn't support specifying an output directory for downloaded
     # files, so we need to change which directory we're in before downloading.
+    if not os.path.exists(os.path.join(os.getcwd(), download_dir)):
+        os.mkdir(os.path.join(os.getcwd(), download_dir))
     cwd = os.getcwd()
     os.chdir(os.path.join(cwd, download_dir))
 
@@ -23,8 +25,8 @@ def download_vreddit_videos(links: list, ytdl_opts: dict, download_dir='tmp'):
 def move_video_files(folder='tmp', ext='.mp4'):
     # Might want to consider using tempfile.TemporaryDirectory() instead of
     # os.mkdir(), but I'm not sure if we can pass that around to other modules
-    if not os.path.exists(folder):
-        os.mkdir(folder)
+    if not os.path.exists(os.path.join(os.getcwd(), folder)):
+        os.mkdir(os.path.join(os.getcwd(), folder))
 
     for file in os.listdir('.'):
         if not file.endswith(ext):
@@ -57,7 +59,6 @@ def concat_videos(output: str, ext='.mp4', input_folder='tmp'):
                     '-f', 'concat', '-safe', '0', '-i', videos_txt,
                     '-c:v', 'libx264', '-crf', '23', '-preset', 'slow',
                     '-c:a', 'aac', output])
-
 
 #  Reddit-To-YouTube combines vreddit posts into one YouTube video.
 #  Copyright (C) 2020  Calvin Barrett, Ralph Drake
