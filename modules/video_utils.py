@@ -18,6 +18,12 @@ def download_vreddit_videos(links: list, ytdl_opts: dict, download_dir='tmp'):
     #       the videos are ordered by number of upvotes?
     with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
         ytdl.download(links)
+    
+    videos_to_reencode = (f for f in os.listdir(os.getcwd()) if f.endswith('.mp4'))
+
+    for pos, videos_to_reencode in enumerate(videos_to_reencode):
+        os.system(f"ffmpeg -i {videos_to_reencode} -video_track_timescale 90000 {pos}.mp4")
+        os.remove(videos_to_reencode)
 
     os.chdir(cwd)
 
