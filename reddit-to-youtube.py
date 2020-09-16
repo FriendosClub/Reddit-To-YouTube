@@ -3,7 +3,9 @@
 
 import os
 from datetime import date
+import shutil
 from modules import reddit_api, video_utils, youtube_upload
+
 
 if __name__ == '__main__':
     print('Fetching links from Reddit API...')
@@ -32,15 +34,20 @@ if __name__ == '__main__':
     output = os.path.join(os.getcwd(), 'test_video.mp4')
     video_utils.concat_videos(output)
 
+    # Remove our temporary files
+    shutil.rmtree('tmp')
+
     todays_date = date.today()
     youtube_upload.youtube_upload(
         output, 
-        f"{subreddit} Top Posts of the {time} ({date.today()})",
-        f"This {time}'s top posts from {subreddit}",
-        f"people,blogs",
-        22,
-        'public'
+        f'{subreddit} Top Posts of the {time} ({date.today()})',
+        f'This {time}\'s top posts from {subreddit}',
+        f'reddit,{subreddit}',
+        'public',  
+        '23'
     )
+
+    os.remove(output)   # Remove our concatenated video 
 
 
 
