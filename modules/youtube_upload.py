@@ -2,16 +2,19 @@
 # See the bottom of this file for license information
 import subprocess
 
-def youtube_upload(output: str, title: str, description: str, keywords: str, privacyStatus: str, category: str):
-    subprocess.run(
-        ['python3', 'upload_video.py', 
-        '--file=' + output, 
+
+def youtube_upload(output: str, title: str, description: str, keywords: str,
+                   privacyStatus: str, category: str):
+    subprocess.run([
+        'python3', 'upload_video.py',
+        '--file=' + output,
         '--title=' + title,
-        '--description=' + description, 
+        '--description=' + description,
         '--keywords=' + keywords,
         '--privacyStatus=' + privacyStatus,
         '--category=' + category
-        ])
+    ])
+
 
 #  Reddit-To-YouTube combines vreddit posts into one YouTube video.
 #  Copyright (C) 2020  Calvin Barrett, Ralph Drake

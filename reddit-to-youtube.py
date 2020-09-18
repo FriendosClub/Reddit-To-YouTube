@@ -39,16 +39,15 @@ if __name__ == '__main__':
 
     todays_date = date.today()
     youtube_upload.youtube_upload(
-        output, 
+        output,
         f'{subreddit} Top Posts of the {time} ({date.today()})',
         f'This {time}\'s top posts from {subreddit}',
         f'reddit,{subreddit}',
-        'public',  
+        'public',
         '23'
     )
 
-    os.remove(output)   # Remove our concatenated video 
-
+    os.remove(output)   # Remove our concatenated video
 
 
 #  Reddit-To-YouTube combines vreddit posts into one YouTube video.

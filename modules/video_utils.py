@@ -60,10 +60,12 @@ def concat_videos(output: str, ext='.mp4', input_folder='tmp'):
     #        timebase before they are all concatenated, otherwise ffmpeg
     #        will not produce a usable video. (-vsync 0 does not fix this)
     #        See: https://stackoverflow.com/a/56002050
-    subprocess.run(['ffmpeg', '-y', '-hide_banner',
-                    '-f', 'concat', '-safe', '0', '-i', videos_txt,
-                    '-c:v', 'libx264', '-crf', '23', '-preset', 'slow',
-                    '-c:a', 'aac', output])
+    subprocess.run([
+        'ffmpeg', '-y', '-hide_banner',
+        '-f', 'concat', '-safe', '0', '-i', videos_txt,
+        '-c:v', 'libx264', '-crf', '23', '-preset', 'slow',
+        '-c:a', 'aac', output
+    ])
 
 #  Reddit-To-YouTube combines vreddit posts into one YouTube video.
 #  Copyright (C) 2020  Calvin Barrett, Ralph Drake
