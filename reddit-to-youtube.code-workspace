@@ -11,6 +11,7 @@
 		"editor.tabSize": 4,
 		"files.insertFinalNewline": true,
 		"files.trimFinalNewlines": true,
-		"files.trimTrailingWhitespace": true
+		"files.trimTrailingWhitespace": true,
+		"editor.formatOnSave": true
 	}
 }
