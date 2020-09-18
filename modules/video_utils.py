@@ -5,26 +5,34 @@ import subprocess
 import youtube_dl
 
 
-def download_vreddit_videos(links: list, ytdl_opts: dict, download_dir='tmp'):
+def download_vreddit_videos(links: list, ytdl_opts: dict, download_dir='tmp',
+                            timescale=90000):
     # youtube-dl doesn't support specifying an output directory for downloaded
     # files, so we need to change which directory we're in before downloading.
-    if not os.path.exists(os.path.join(os.getcwd(), download_dir)):
-        os.mkdir(os.path.join(os.getcwd(), download_dir))
-    cwd = os.getcwd()
-    os.chdir(os.path.join(cwd, download_dir))
+    original_cwd = os.getcwd()
+    download_dir = os.path.join(os.getcwd(), download_dir)
+    if not os.path.exists(download_dir):
+        os.mkdir(download_dir)
+    os.chdir(download_dir)
 
-    # TODO: Should we rename videos so, when we later call concat_videos,
-    #       the videos are ordered by number of upvotes?
     with youtube_dl.YoutubeDL(ytdl_opts) as ytdl:
         ytdl.download(links)
 
-    videos_to_reencode = (f for f in os.listdir(os.getcwd()) if f.endswith('.mp4'))
+    videos_to_reencode = (
+        f for f in os.listdir(os.getcwd()) if f.endswith('.mp4')
+    )
 
+    # re-encode all videos to a uniform timescale so we don't encounter
+    # undefined behavior when concatenating them later
     for pos, videos_to_reencode in enumerate(videos_to_reencode):
-        os.system(f"ffmpeg -i {videos_to_reencode} -video_track_timescale 90000 {pos}.mp4")
+        subprocess.run([
+            'ffmpeg', '-y', '-hide_banner',
+            '-i', videos_to_reencode, '-video_track_timescale', str(timescale),
+            f'{pos}.mp4'
+        ])
         os.remove(videos_to_reencode)
 
-    os.chdir(cwd)
+    os.chdir(original_cwd)
 
 
 def move_video_files(folder='tmp', ext='.mp4'):
