@@ -8,6 +8,9 @@
 		"python.linting.enabled": true,
 		"python.linting.pycodestyleEnabled": true,
 		"editor.insertSpaces": true,
-		"editor.tabSize": 4
+		"editor.tabSize": 4,
+		"files.insertFinalNewline": true,
+		"files.trimFinalNewlines": true,
+		"files.trimTrailingWhitespace": true
 	}
 }
