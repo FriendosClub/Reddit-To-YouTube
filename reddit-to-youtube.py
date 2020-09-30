@@ -39,12 +39,12 @@ if __name__ == '__main__':
 
     todays_date = date.today()
     youtube_upload.youtube_upload(
-        output,
-        f'{subreddit} Top Posts of the {time} ({date.today()})',
-        f'This {time}\'s top posts from {subreddit}',
-        f'reddit,{subreddit}',
-        'public',
-        '23'
+        output,                                                     # Video directory path 
+        f'{subreddit} Top Posts of the {time} ({date.today()})',    # Video title
+        f'This {time}\'s top posts from {subreddit}',               # Video description
+        f'reddit,{subreddit}',                                      # Video tags
+        'public',                                                   # Upload privacy status (accepts public, private, or unlisted)
+        '23'                                                        # Youtube API video category id (region specific)
     )
 
     os.remove(output)   # Remove our concatenated video
